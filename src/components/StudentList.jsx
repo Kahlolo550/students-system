@@ -11,7 +11,7 @@ const StudentList = forwardRef(({ onEdit }, ref) => {
       const res = await api.get("/students");
       setStudents(res.data);
     } catch (err) {
-      console.error(err);
+      console.error("Error fetching students:", err);
     } finally {
       setLoading(false);
     }
@@ -19,9 +19,7 @@ const StudentList = forwardRef(({ onEdit }, ref) => {
 
   useImperativeHandle(ref, () => ({ fetchStudents }));
 
-  useEffect(() => {
-    fetchStudents();
-  }, []);
+  useEffect(() => { fetchStudents(); }, []);
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this student?")) return;
@@ -29,30 +27,25 @@ const StudentList = forwardRef(({ onEdit }, ref) => {
       await api.delete(`/students/${id}`);
       fetchStudents();
     } catch (err) {
-      console.error(err);
+      console.error("Error deleting student:", err);
     }
   };
 
   return (
     <div className="student-list">
       <h2>Students</h2>
-      {loading ? (
-        <p className="loading-text">Loading students...</p>
-      ) : students.length === 0 ? (
-        <p className="loading-text">No students found.</p>
-      ) : (
+      {loading ? <p>Loading students...</p> :
+        students.length === 0 ? <p>No students found.</p> :
         <ul>
           {students.map((s) => (
-            <li key={s.id} className="student-item">
-              <span className="student-info">{s.name} — {s.course} ({s.email})</span>
-              <div className="student-actions">
-                <button onClick={() => onEdit(s)} className="btn-edit">Edit</button>
-                <button onClick={() => handleDelete(s.id)} className="btn-delete">Delete</button>
-              </div>
+            <li key={s.id}>
+              {s.name} — {s.course} ({s.email})
+              <button onClick={() => onEdit(s)}>Edit</button>
+              <button onClick={() => handleDelete(s.id)}>Delete</button>
             </li>
           ))}
         </ul>
-      )}
+      }
     </div>
   );
 });

@@ -23,7 +23,7 @@ export default function StudentForm({ editingStudent, onSaved }) {
       setForm({ name: "", email: "", course: "" });
       onSaved();
     } catch (err) {
-      console.error(err);
+      console.error("Error saving student:", err);
     }
   };
 
