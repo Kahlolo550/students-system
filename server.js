@@ -12,17 +12,17 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// API routes
 app.use("/students", studentsRouter);
 
-// Serve React build from 'mapp/dist'
 const __filename = fileURLToPath(
     import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Serve React build
 app.use(express.static(path.join(__dirname, "mapp/dist")));
 
-// Serve index.html for all other routes
-app.get("*", (req, res) => {
+// Catch-all route for React SPA
+app.get("/:catchAll(.*)", (req, res) => {
     res.sendFile(path.join(__dirname, "mapp/dist", "index.html"));
 });
 
@@ -38,7 +38,8 @@ async function startServer() {
             console.log(`Server running on port ${PORT}`);
         });
     } catch (err) {
-        console.error("Failed to connect to the database:", err);
+        console.error("Failed to connect to the database:");
+        console.error(err);
         process.exit(1);
     }
 }
