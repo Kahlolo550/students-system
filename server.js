@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
+
 import studentsRouter from "./routes/students.js";
 import { pool } from "./db.js";
 
@@ -10,15 +13,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// API routes
 app.use("/students", studentsRouter);
 
-// Root route to avoid 502 on /
-app.get("/", (req, res) => {
-    res.send("✅ Server is running successfully");
+// Serve React frontend from dist/
+const __filename = fileURLToPath(
+    import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, "dist")));
+
+// Catch-all route for React Router
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 const PORT = process.env.PORT || 5000;
-
 
 async function startServer() {
     try {
