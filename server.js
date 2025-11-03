@@ -17,8 +17,15 @@ app.use("/students", studentsRouter);
 app.get("/", (req, res) => {
     res.send("Server is running");
 });
-app.get('/health', (req, res) => {
-    res.status(200).json({ status: 'Bakery backend is alive!' });
+
+// Health check route
+app.get("/health", async(req, res) => {
+    try {
+        await pool.query("SELECT 1");
+        res.status(200).json({ status: "Backend alive", db: "connected" });
+    } catch {
+        res.status(200).json({ status: "Backend alive", db: "disconnected" });
+    }
 });
 
 // 404 handler
@@ -32,20 +39,19 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: "Internal server error", details: err.message });
 });
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5000;
 
 async function startServer() {
+    app.listen(PORT, () => {
+        console.log(`✅ Server running on port ${PORT}`);
+    });
+
     try {
         const connection = await pool.getConnection();
-        console.log("Database connected successfully");
+        console.log("✅ Database connected successfully");
         connection.release();
-
-        app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
-        });
     } catch (err) {
-        console.error("Failed to connect to the database:", err);
-        process.exit(1);
+        console.error("⚠️ Database connection failed:", err.message);
     }
 }
 
