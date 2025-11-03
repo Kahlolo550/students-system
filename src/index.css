@@ -1,0 +1,134 @@
+/* Reset & base */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: url("./assets/db.jpeg") no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem;
+    color: #111827;
+}
+
+
+/* Main container */
+
+.app-container {
+    width: 100%;
+    max-width: 900px;
+    background: rgba(255, 255, 255, 0.92);
+    /* translucent white */
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(6px);
+    /* subtle glass effect */
+}
+
+
+/* Headings */
+
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #1f2937;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    color: #374151;
+}
+
+
+/* Form styling */
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+form input {
+    flex: 1;
+    padding: 0.6rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    transition: border-color 0.2s;
+}
+
+form input:focus {
+    border-color: #3b82f6;
+    outline: none;
+}
+
+form button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+form button:hover {
+    background: #1d4ed8;
+}
+
+
+/* Student list */
+
+ul {
+    list-style: none;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+li span {
+    font-weight: 500;
+}
+
+li button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+li button:first-child {
+    color: #2563eb;
+}
+
+li button:first-child:hover {
+    background: rgba(37, 99, 235, 0.1);
+}
+
+li button:last-child {
+    color: #dc2626;
+}
+
+li button:last-child:hover {
+    background: rgba(220, 38, 38, 0.1);
+}
