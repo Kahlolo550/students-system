@@ -5,7 +5,9 @@ export default function StudentForm({ editingStudent, onSaved }) {
   const [form, setForm] = useState({ name: "", email: "", course: "" });
 
   useEffect(() => {
-    if (editingStudent) setForm(editingStudent);
+    if (editingStudent) {
+      setForm(editingStudent);
+    }
   }, [editingStudent]);
 
   const handleChange = (e) => {
@@ -29,10 +31,31 @@ export default function StudentForm({ editingStudent, onSaved }) {
 
   return (
     <form onSubmit={handleSubmit} className="form-container">
-      <input name="name" value={form.name} onChange={handleChange} placeholder="Name" />
-      <input name="email" value={form.email} onChange={handleChange} placeholder="Email" />
-      <input name="course" value={form.course} onChange={handleChange} placeholder="Course" />
-      <button type="submit">{form.id ? "Update" : "Add"}</button>
+      <input
+        name="name"
+        value={form.name}
+        onChange={handleChange}
+        placeholder="Name"
+        required
+      />
+      <input
+        name="email"
+        type="email"
+        value={form.email}
+        onChange={handleChange}
+        placeholder="Email"
+        required
+      />
+      <input
+        name="course"
+        value={form.course}
+        onChange={handleChange}
+        placeholder="Course"
+        required
+      />
+      <button type="submit">
+        {form.id ? "Update Student" : "Add Student"}
+      </button>
     </form>
   );
 }

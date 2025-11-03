@@ -19,7 +19,9 @@ const StudentList = forwardRef(({ onEdit }, ref) => {
 
   useImperativeHandle(ref, () => ({ fetchStudents }));
 
-  useEffect(() => { fetchStudents(); }, []);
+  useEffect(() => {
+    fetchStudents();
+  }, []);
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this student?")) return;
@@ -34,18 +36,30 @@ const StudentList = forwardRef(({ onEdit }, ref) => {
   return (
     <div className="student-list">
       <h2>Students</h2>
-      {loading ? <p>Loading students...</p> :
-        students.length === 0 ? <p>No students found.</p> :
+      {loading ? (
+        <p>Loading students...</p>
+      ) : students.length === 0 ? (
+        <p>No students found.</p>
+      ) : (
         <ul>
           {students.map((s) => (
-            <li key={s.id}>
-              {s.name} — {s.course} ({s.email})
-              <button onClick={() => onEdit(s)}>Edit</button>
-              <button onClick={() => handleDelete(s.id)}>Delete</button>
+            <li key={s.id} className="student-item">
+              <div className="student-info">
+                <strong>{s.name}</strong> — {s.course}
+                <div style={{ fontSize: "0.85rem", opacity: 0.8 }}>{s.email}</div>
+              </div>
+              <div className="student-actions">
+                <button className="btn-edit" onClick={() => onEdit(s)}>
+                  Edit
+                </button>
+                <button className="btn-delete" onClick={() => handleDelete(s.id)}>
+                  Delete
+                </button>
+              </div>
             </li>
           ))}
         </ul>
-      }
+      )}
     </div>
   );
 });
