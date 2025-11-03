@@ -17,7 +17,8 @@ app.get("/", (req, res) => {
     res.send("✅ Server is running successfully");
 });
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5000;
+
 
 async function startServer() {
     try {
@@ -25,7 +26,7 @@ async function startServer() {
         console.log("✅ Database connected successfully");
         connection.release();
 
-        app.listen(PORT, () => {
+        app.listen(PORT, "0.0.0.0", () => {
             console.log(`✅ Server running on port ${PORT}`);
         });
     } catch (err) {
