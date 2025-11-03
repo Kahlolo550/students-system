@@ -19,12 +19,16 @@ const __dirname = path.dirname(__filename);
 // API routes
 app.use("/students", studentsRouter);
 
-// Serve frontend from dist folder
+// Serve static files from dist
 app.use(express.static(path.join(__dirname, "dist")));
 
-// Fix catch-all route for latest Express
-app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "dist", "index.html"));
+// Catch-all fallback for SPA
+app.use((req, res, next) => {
+    if (req.method === "GET" && !req.path.startsWith("/students")) {
+        res.sendFile(path.join(__dirname, "dist", "index.html"));
+    } else {
+        next();
+    }
 });
 
 const PORT = process.env.PORT || 5000;
