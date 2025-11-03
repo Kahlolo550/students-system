@@ -28,31 +28,26 @@ export default function StudentForm({ editingStudent, onSaved }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-4">
+    <form onSubmit={handleSubmit} className="form-container">
       <input
         name="name"
         value={form.name}
         onChange={handleChange}
         placeholder="Name"
-        className="border p-2 mr-2"
       />
       <input
         name="email"
         value={form.email}
         onChange={handleChange}
         placeholder="Email"
-        className="border p-2 mr-2"
       />
       <input
         name="course"
         value={form.course}
         onChange={handleChange}
         placeholder="Course"
-        className="border p-2 mr-2"
       />
-      <button type="submit" className="bg-green-500 text-white px-4 py-2">
-        {form.id ? "Update" : "Add"}
-      </button>
+      <button type="submit">{form.id ? "Update" : "Add"}</button>
     </form>
   );
 }
