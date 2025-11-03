@@ -17,6 +17,9 @@ app.use("/students", studentsRouter);
 app.get("/", (req, res) => {
     res.send("Server is running");
 });
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'Bakery backend is alive!' });
+});
 
 // 404 handler
 app.use((req, res) => {
