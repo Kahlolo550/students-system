@@ -9,36 +9,41 @@ dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Routes
 app.use("/students", studentsRouter);
 
-const PORT = process.env.PORT || 4000;
+// Default route
+app.get("/", (req, res) => {
+    res.send("Server is running");
+});
+
+// 404 handler
+app.use((req, res) => {
+    res.status(404).json({ error: "Endpoint not found" });
+});
+
+// Global error handler
+app.use((err, req, res, next) => {
+    console.error("Internal server error:", err);
+    res.status(500).json({ error: "Internal server error", details: err.message });
+});
+
+const PORT = process.env.PORT || 8080;
 
 async function startServer() {
     try {
-        await pool.query("SELECT 1");
+        const connection = await pool.getConnection();
         console.log("Database connected successfully");
+        connection.release();
 
         app.listen(PORT, () => {
             console.log(`Server running on port ${PORT}`);
         });
     } catch (err) {
-        console.error("Failed to connect to the database:");
-        console.error(err); // <-- full error logged
+        console.error("Failed to connect to the database:", err);
         process.exit(1);
     }
 }
-
-// catch unhandled promise rejections
-process.on("unhandledRejection", (reason, promise) => {
-    console.error("Unhandled Rejection at:", promise);
-    console.error("Reason:", reason);
-});
-
-// catch uncaught exceptions
-process.on("uncaughtException", (err) => {
-    console.error("Uncaught Exception thrown:");
-    console.error(err);
-    process.exit(1);
-});
 
 startServer();
