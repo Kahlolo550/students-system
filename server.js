@@ -9,19 +9,17 @@ dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
-
 app.use("/students", studentsRouter);
 
 const PORT = process.env.PORT || 4000;
 
 async function startServer() {
     try {
-        const connection = await pool.getConnection();
+        await pool.query("SELECT 1"); // test connection
         console.log("Database connected successfully");
-        connection.release();
 
         app.listen(PORT, () => {
-            console.log(`Server running on http://localhost:${PORT}`);
+            console.log(`Server running on port ${PORT}`);
         });
     } catch (err) {
         console.error("Failed to connect to the database:", err);
