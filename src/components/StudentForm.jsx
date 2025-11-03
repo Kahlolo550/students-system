@@ -23,30 +23,15 @@ export default function StudentForm({ editingStudent, onSaved }) {
       setForm({ name: "", email: "", course: "" });
       onSaved();
     } catch (err) {
-      console.error("Error saving student:", err);
+      console.error(err);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="form-container">
-      <input
-        name="name"
-        value={form.name}
-        onChange={handleChange}
-        placeholder="Name"
-      />
-      <input
-        name="email"
-        value={form.email}
-        onChange={handleChange}
-        placeholder="Email"
-      />
-      <input
-        name="course"
-        value={form.course}
-        onChange={handleChange}
-        placeholder="Course"
-      />
+      <input name="name" value={form.name} onChange={handleChange} placeholder="Name" />
+      <input name="email" value={form.email} onChange={handleChange} placeholder="Email" />
+      <input name="course" value={form.course} onChange={handleChange} placeholder="Course" />
       <button type="submit">{form.id ? "Update" : "Add"}</button>
     </form>
   );

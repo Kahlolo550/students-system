@@ -11,15 +11,13 @@ const StudentList = forwardRef(({ onEdit }, ref) => {
       const res = await api.get("/students");
       setStudents(res.data);
     } catch (err) {
-      console.error("Error fetching students:", err);
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  useImperativeHandle(ref, () => ({
-    fetchStudents
-  }));
+  useImperativeHandle(ref, () => ({ fetchStudents }));
 
   useEffect(() => {
     fetchStudents();
@@ -31,7 +29,7 @@ const StudentList = forwardRef(({ onEdit }, ref) => {
       await api.delete(`/students/${id}`);
       fetchStudents();
     } catch (err) {
-      console.error("Error deleting student:", err);
+      console.error(err);
     }
   };
 
@@ -46,9 +44,7 @@ const StudentList = forwardRef(({ onEdit }, ref) => {
         <ul>
           {students.map((s) => (
             <li key={s.id} className="student-item">
-              <span className="student-info">
-                {s.name} — {s.course} ({s.email})
-              </span>
+              <span className="student-info">{s.name} — {s.course} ({s.email})</span>
               <div className="student-actions">
                 <button onClick={() => onEdit(s)} className="btn-edit">Edit</button>
                 <button onClick={() => handleDelete(s.id)} className="btn-delete">Delete</button>
