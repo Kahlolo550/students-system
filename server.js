@@ -22,7 +22,8 @@ app.use("/students", studentsRouter);
 // Serve frontend from dist folder
 app.use(express.static(path.join(__dirname, "dist")));
 
-app.get("*", (req, res) => {
+// Fix catch-all route for latest Express
+app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
