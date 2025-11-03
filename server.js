@@ -21,8 +21,8 @@ const __dirname = path.dirname(__filename);
 // Serve React build
 app.use(express.static(path.join(__dirname, "mapp/dist")));
 
-// Catch-all route for React SPA (Express 5 compatible)
-app.get("*", (req, res) => {
+// Catch-all route for React SPA
+app.get(/.*/, (req, res) => {
     res.sendFile(path.join(__dirname, "mapp/dist", "index.html"));
 });
 
